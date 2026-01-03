@@ -84,17 +84,21 @@ use crate::svg;
 use crate::svg::*;
 use crate::fltk::WidgetExtExtra;
 use crate::fltk::button;
+use paste::paste;
 
 macro_rules! create_buttons
 {
   ($($name:ident),*) =>
   {
     $(
-      pub fn $name() -> fltk::button::Button
+      paste!
       {
-        button::button::<fltk::button::Button>()
-            .with_svg((concat_idents!(icon_,$name)(1.0).as_str()))
-            .with_size(dimm::width_button_rec(), dimm::height_button_rec())
+        pub fn $name() -> fltk::button::Button
+        {
+          button::button::<fltk::button::Button>()
+              .with_svg([<icon_ $name>](1.0).as_str())
+              .with_size(dimm::width_button_rec(), dimm::height_button_rec())
+        }
       }
     )*
   };

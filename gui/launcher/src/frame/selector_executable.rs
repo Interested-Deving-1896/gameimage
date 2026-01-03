@@ -136,7 +136,7 @@ pub fn new(tx : Sender<Msg>)
           let tx = tx.clone();
           move |_|
           {
-            std::env::set_var("GIMG_LAUNCHER_EXECUTABLE", &entry);
+            unsafe { std::env::set_var("GIMG_LAUNCHER_EXECUTABLE", &entry); }
             tx.send(common::Msg::DrawCover);
           }
         });

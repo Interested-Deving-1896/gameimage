@@ -96,14 +96,14 @@ pub fn name(tx: Sender<common::Msg>
   };
   // Check if GIMG_NAME exists
   let env_name = f_sanitize(env::var("GIMG_NAME").unwrap_or_default());
-  env::set_var("GIMG_NAME", &env_name);
+  unsafe { env::set_var("GIMG_NAME", &env_name); }
   input_name.set_value(&env_name);
   // Set input_name callback
   input_name.handle(move |input,ev|
   {
     if ev == fltk::enums::Event::KeyUp
     {
-      env::set_var("GIMG_NAME", f_sanitize(input.value()));
+      unsafe { env::set_var("GIMG_NAME", f_sanitize(input.value())); }
       return true;
     } // if
     return false;

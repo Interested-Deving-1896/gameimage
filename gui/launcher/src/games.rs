@@ -31,11 +31,14 @@ pub fn launch()
 // pub fn select() {{{
 pub fn select(game: &Game)
 {
-  std::env::set_var("GIMG_PLATFORM", game.platform.as_str());
-  std::env::set_var("GIMG_LAUNCHER_BOOT", game.path_boot.to_str().unwrap_or(""));
-  std::env::set_var("GIMG_LAUNCHER_ROOT", game.path_root.to_str().unwrap_or(""));
-  std::env::set_var("GIMG_LAUNCHER_IMG", game.path_icon.to_str().unwrap_or(""));
-  std::env::set_var("GIMG_LAUNCHER_IMG_GRAYSCALE", game.path_icon_grayscale.to_str().unwrap_or(""));
+  unsafe
+  {
+    std::env::set_var("GIMG_PLATFORM", game.platform.as_str());
+    std::env::set_var("GIMG_LAUNCHER_BOOT", game.path_boot.to_str().unwrap_or(""));
+    std::env::set_var("GIMG_LAUNCHER_ROOT", game.path_root.to_str().unwrap_or(""));
+    std::env::set_var("GIMG_LAUNCHER_IMG", game.path_icon.to_str().unwrap_or(""));
+    std::env::set_var("GIMG_LAUNCHER_IMG_GRAYSCALE", game.path_icon_grayscale.to_str().unwrap_or(""));
+  }
 } // fn: select }}}
 
 // pub fn select_by_index() {{{

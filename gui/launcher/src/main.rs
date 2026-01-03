@@ -1,4 +1,4 @@
-#![feature(let_chains, proc_macro_hygiene, stmt_expr_attributes)]
+#![feature(proc_macro_hygiene, stmt_expr_attributes)]
 
 // Gui
 use fltk::{

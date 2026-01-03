@@ -84,7 +84,7 @@ pub fn welcome(tx: Sender<common::Msg>, title: &str)
     // Update chosen dir in selection bar
     e.set_value(&path_selected.string());
     // Set env var to build dir
-    env::set_var("GIMG_DIR", &path_selected.string());
+    unsafe { env::set_var("GIMG_DIR", &path_selected.string()); }
   });
 
   // Set callback for next

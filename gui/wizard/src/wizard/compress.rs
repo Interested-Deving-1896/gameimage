@@ -77,7 +77,7 @@ pub fn compress(tx: Sender<common::Msg>
   {
     let str_level = e.choice().unwrap_or(String::from("7"));
     log!("Set compression level to {}", str_level);
-    env::set_var("FIM_COMPRESSION_LEVEL", &str_level);
+    unsafe { env::set_var("FIM_COMPRESSION_LEVEL", &str_level); }
     e.set_value(e.value());
     e.set_label(&str_level);
   });
@@ -85,7 +85,7 @@ pub fn compress(tx: Sender<common::Msg>
   {
     btn_level.add_choice(&i.to_string());
   } // for
-  env::set_var("FIM_COMPRESSION_LEVEL", "7");
+  unsafe { env::set_var("FIM_COMPRESSION_LEVEL", "7"); }
   btn_level.set_value(8);
   btn_level.set_label("7");
 } // fn compress() }}}

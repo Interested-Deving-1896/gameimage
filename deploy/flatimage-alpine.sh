@@ -134,28 +134,26 @@ done
 
 # Fetch flatimage
 export IMAGE="$BUILD_DIR"/alpine.flatimage
-wget -O"$IMAGE" "$(wget -qO - "https://api.github.com/repos/ruanformigoni/flatimage/releases/latest" \
-  | jq -r '.assets.[].browser_download_url | match(".*alpine.flatimage$").string')"
+wget -O"$IMAGE" "https://github.com/flatimage/flatimage/releases/latest/download/alpine-x86_64.flatimage"
 chmod +x "$IMAGE"
 
 # Set permissions
-"$IMAGE" fim-perms add home,media,network,xorg,wayland,dbus_user
+"$IMAGE" fim-perms add home,media,network,xorg,wayland,dbus_user,dev
 
 # Install dependencies
-"$IMAGE" fim-root apk add libxkbcommon libxinerama libxcursor font-noto xz tar libssl3
+"$IMAGE" fim-root apk add wayland-libs-client wayland-libs-cursor pango glib cairo libgcc dbus-libs libxkbcommon libxinerama libxcursor font-noto xz tar libssl3
 
 # Set environment variables
 "$IMAGE" fim-env set 'PATH=/opt/gameimage/bin:"$PATH"' 'GIMG_BACKEND="/opt/gameimage/bin/gameimage-cli"'
 
 # Set boot command
-"$IMAGE" fim-boot sh -c '/opt/gameimage/bin/gameimage-wizard'
+"$IMAGE" fim-boot set sh -c '/opt/gameimage/bin/gameimage-wizard'
 
 # Copy binaries
 "$IMAGE" fim-exec cp -r "$BUILD_DIR"/app /opt/gameimage
 
 # Create novel image layer
-## TODO Remove '|| true' after commit directory erase errors become warnings
-"$IMAGE" fim-commit || true
+"$IMAGE" fim-layer commit binary
 
 mv "$IMAGE" "$BUILD_DIR"/gameimage
 
